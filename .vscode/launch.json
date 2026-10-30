@@ -2,13 +2,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Youju · 当前设备（演示）",
+      "name": "Youju · Android/iOS App（先选设备）",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart"
     },
     {
-      "name": "Youju · Chrome（演示）",
+      "name": "Youju · Chrome 网页（非原生 App）",
       "request": "launch",
       "type": "dart",
       "deviceId": "chrome",

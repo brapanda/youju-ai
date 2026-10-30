@@ -2,6 +2,8 @@
 
 独立 Flutter UI 工程与一份无需 Flutter 的浏览器交互设计稿。以旧版绿色为基调，使用悬浮胶囊底栏，支持浅色／深色。当前仅开发首页、地图／列表、简洁房源详情；AI、账号及完整个人服务均未接入。
 
+**要测试手机 App，请阅读 [App 真机与模拟器测试步骤](docs/APP_TESTING.md)。** 打开 `design/index.html` 或选择 Chrome 都是网页；Android/iOS 需要选择实际设备或模拟器。当前没有编译好的 APK 或 TestFlight 安装包。
+
 ## 最快看设计：不需要安装 Flutter
 
 下载并解压整个项目。在项目根目录运行：
@@ -48,7 +50,7 @@ flutter run -d chrome
 
 不要给 `flutter create` 添加 `--overwrite`，以免覆盖已编写的文件。工程未来发布前需要确定正式 bundle ID 与签名。
 
-4. VS Code 左侧「运行和调试」选择 `Youju · Chrome（演示）`，按 F5。Android 则先在 Android Studio 安装 SDK、启动模拟器，再在 VS Code 选择设备和 `Youju · 当前设备（演示）`。
+4. 若测试网页，在 VS Code 左侧「运行和调试」选择 `Youju · Chrome 网页（非原生 App）`，按 F5。若测试 Android/iOS，先启动模拟器或连接手机，再在 VS Code 底部选择设备和运行配置 `Youju · Android/iOS App（先选设备）`。
 5. iOS 必须使用 Mac/Xcode；完成 Flutter 与插件所需平台配置、签名及依赖安装后选择模拟器。Mapbox 最低 iOS 14；所选 Flutter 的生成模板为 iOS 15，应保留较高要求。Android 同样保留 Flutter 生成的最低 SDK。当前未验证 Android/iOS 构建。
 
 ### 接入真实 Mapbox
