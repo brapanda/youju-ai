@@ -11,5 +11,6 @@ flutter --version
 if [[ ! -d android || ! -d ios || ! -d web ]]; then
   flutter create --no-pub --platforms=android,ios,web --org ca.youju --project-name youju_ai .
 fi
+dart tool/configure_android.dart
 flutter pub get
 echo 'Bootstrap finished. Run flutter analyze, flutter test, then flutter run.'

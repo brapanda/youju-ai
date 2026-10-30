@@ -25,3 +25,7 @@
 在允许 SDK 下载的环境运行首次初始化，之后执行 `dart format lib test`、`flutter analyze`、`flutter test`、`flutter build web`，处理实际报告。再在 Android 模拟器／iOS 模拟器检查页面、键盘、安全区和 Mapbox，才可以声明移动端可运行。
 
 当前截图均来自 **HTML 浏览器设计稿**，不是 Flutter 或原生 App 截图。
+
+## Android 本机反馈：Mapbox Kotlin 配置
+
+用户首次构建在 Mapbox 3.34.1 的 `kotlin {}` 配置阶段失败。核对 Flutter 3.47.9 模板和 Mapbox 官方包源码后确认：默认 `android.builtInKotlin=false` 与 Mapbox AGP 9 分支不匹配。增加 `tool/configure_android.dart`，在生成的 AGP 9 工程开启内置 Kotlin，保留其他属性；bootstrap 和手动步骤均已接入。尚未在当前云环境实际执行 Dart 脚本或 Android 构建，不将源码核对表述为构建通过。

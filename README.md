@@ -42,6 +42,7 @@ Windows PowerShell：
 
 ```sh
 flutter create --no-pub --platforms=android,ios,web --org ca.youju --project-name youju_ai .
+dart tool/configure_android.dart
 flutter pub get
 flutter analyze
 flutter test

@@ -16,6 +16,7 @@ cd youju-ai
 flutter --version
 flutter doctor -v
 flutter create --no-pub --platforms=android,ios,web --org ca.youju --project-name youju_ai .
+dart tool/configure_android.dart
 flutter pub get
 flutter analyze
 flutter test
@@ -92,3 +93,26 @@ Windows 可以编辑 Flutter 源码，不能本地编译、签名或运行 iOS �
 无 Token 可走离线示意地图界面，但因为工程包含 Mapbox 插件，首次构建仍需要下载其原生依赖。实际 Mapbox 公共样式需公开 access token；当前使用的发布版 SDK 不要求额外的 secret download token。不要把 AMPRE 或其他服务密钥放入 Flutter 客户端。
 
 Flutter 的本次会话收藏在重启后会清空；AI、账号、AMPRE、数据库及真实定位尚未接入。网页设计稿与 Flutter 页面的部分排版不同，网页截图不代表 App 实测结果。
+
+## Mapbox 构建报 Could not find method kotlin()
+
+Flutter 3.47.9 生成的 Android 工程使用 AGP 9，但默认设置 `android.builtInKotlin=false`。Mapbox 3.34.1 在 AGP 9 下跳过传统 Kotlin 插件，需要开启内置 Kotlin，否则其 `kotlin {}` 配置找不到对应扩展。
+
+在当前生成模板下，只需编辑 **项目目录内**的 `android/gradle.properties`：
+
+```properties
+android.builtInKotlin=true
+android.newDsl=false
+```
+
+把原有 `android.builtInKotlin=false` 改成 `true`，不要额外添加矛盾的重复项，其他属性保留。`dart tool/configure_android.dart` 自动完成此项，并拒绝直接迁移显式应用旧 Kotlin 插件的自定义工程。bootstrap 已包含此步骤。
+
+若 `android/app/build.gradle.kts` 的 `plugins` 中显式应用了 `id("org.jetbrains.kotlin.android")` 或 `id("kotlin-android")`，需要先审查并移除该旧插件应用，再启用内置 Kotlin。`settings.gradle.kts` 中仅声明 `apply false` 的版本项可以保留。
+
+修改后在项目根目录重试：
+
+```sh
+flutter run -d emulator-5554
+```
+
+这里的设备 ID 来自当前测试机输出；其他机器以 `flutter devices` 为准。不需要修改 Pub Cache 内的 Mapbox 源码，也无需因本错误降级 Gradle。这是依据官方源码确定的配置修正；完整 Android 构建仍需在有 SDK 的机器上验证。
